@@ -2,6 +2,7 @@ import ResturantCard from "./ResturantCard";
 import restList from "../utils/mockdata";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   const [listOfResturants, setListOfResturants] = useState([]);
@@ -13,7 +14,6 @@ const Body = () => {
   }, []);
 
   const fetchData = async () => {
-    console.log("use effect called");
     const data = await fetch(
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.4929968&lng=78.3911945&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING",
     );
@@ -41,7 +41,6 @@ const Body = () => {
         <Shimmer />
       </div>
     );
-    ßßß;
   }
 
   return (
@@ -76,7 +75,11 @@ const Body = () => {
       </div>
       <div className="res-container">
         {filteredResturants.map((res) => {
-          return <ResturantCard resData={res} key={res.info.id} />;
+          return (
+            <Link key={res.info.id} to={"/restaurants/"+res.info.id}>
+              <ResturantCard resData={res} />
+            </Link>
+          );
         })}
       </div>
     </div>
